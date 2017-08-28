@@ -409,7 +409,7 @@
 //        return IWalletService.getWalletInfo(id);
 //    }
 //
-//
+
 //    /**
 //     * a wrapper class of the WalletInfo class
 //     */
