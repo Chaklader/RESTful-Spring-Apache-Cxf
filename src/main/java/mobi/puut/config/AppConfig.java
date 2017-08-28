@@ -18,13 +18,13 @@ import javax.ws.rs.ext.RuntimeDelegate;
 import java.util.List;
 
 @Configuration
-@ComponentScan(AppConfig.SERVICE_PACKAGE)
 public class AppConfig {
 
-    public static final String BASE_PACKAGE = "mobi.puut";
-    public static final String SERVICE_PACKAGE = BASE_PACKAGE + ".services";
-    private static final String RESOURCES_PACKAGE = BASE_PACKAGE + ".rest";
-    private static final String PROVIDER_PACKAGE = BASE_PACKAGE + ".rest.provider";
+    public static final String SERVICE_PACKAGE = "mobi.puut.services";
+
+    private static final String RESOURCES_PACKAGE = "mobi.puut.services";
+
+    private static final String PROVIDER_PACKAGE = "mobi.puut.services.utils.provider";
 
     public static final String API_BASE = "/api/*";
 
@@ -67,5 +67,4 @@ public class AppConfig {
         providers.add(jsonProvider);
         return providers;
     }
-
 }

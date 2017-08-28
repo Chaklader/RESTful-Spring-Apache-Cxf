@@ -1,4 +1,4 @@
-package mobi.puut.database;
+package mobi.puut.database.def;
 
 import mobi.puut.entities.Status;
 

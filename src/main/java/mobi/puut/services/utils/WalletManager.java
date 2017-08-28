@@ -1,4 +1,4 @@
-package mobi.puut.rest;
+package mobi.puut.services.utils;
 
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.kits.WalletAppKit;

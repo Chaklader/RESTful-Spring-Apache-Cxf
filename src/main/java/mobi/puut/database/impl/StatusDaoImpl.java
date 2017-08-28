@@ -1,5 +1,6 @@
-package mobi.puut.database;
+package mobi.puut.database.impl;
 
+import mobi.puut.database.def.IStatusDao;
 import mobi.puut.entities.Status;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

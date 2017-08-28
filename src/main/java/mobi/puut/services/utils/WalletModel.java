@@ -1,4 +1,4 @@
-package mobi.puut.rest;
+package mobi.puut.services.utils;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;

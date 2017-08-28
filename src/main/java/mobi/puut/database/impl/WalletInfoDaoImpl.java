@@ -1,5 +1,6 @@
-package mobi.puut.database;
+package mobi.puut.database.impl;
 
+import mobi.puut.database.def.IWalletInfoDao;
 import mobi.puut.entities.WalletInfo;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
     private final Logger loggger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    IStatusDao IStatusDao;
+    mobi.puut.database.def.IStatusDao IStatusDao;
 
     @Autowired
     private SessionFactory sessionFactory;

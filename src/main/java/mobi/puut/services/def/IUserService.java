@@ -1,4 +1,4 @@
-package mobi.puut.services;
+package mobi.puut.services.def;
 
 import mobi.puut.entities.User;
 

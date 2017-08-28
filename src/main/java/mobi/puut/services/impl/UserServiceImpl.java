@@ -1,11 +1,11 @@
-package mobi.puut.services;
+package mobi.puut.services.impl;
 
 import java.util.List;
 import java.util.Objects;
 
-import mobi.puut.database.IUserDao;
+import mobi.puut.database.def.IUserDao;
+import mobi.puut.services.def.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import mobi.puut.entities.User;
@@ -18,7 +18,6 @@ import mobi.puut.entities.User;
 public class UserServiceImpl implements IUserService {
 
     @Autowired
-    @Qualifier("userDao")
     public IUserDao userDao;
 
     public List<User> getCurrentStatuses() {

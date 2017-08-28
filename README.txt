@@ -5,7 +5,6 @@ WALLET PROJECT WITH SPRING MVC, APACHE CXF (JAX-RS), HIBERNATE AND MYSQL
 ————————————————————————————————————————————————————————————————————————
 
 
-
 jaxrs-tutorials
 ===============
 

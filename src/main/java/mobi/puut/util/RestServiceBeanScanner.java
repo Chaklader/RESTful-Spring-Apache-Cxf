@@ -14,6 +14,7 @@ public final class RestServiceBeanScanner {
     private RestServiceBeanScanner() { }
 
     public static List<Object> scan(ApplicationContext applicationContext, String... basePackages) {
+
         GenericApplicationContext genericAppContext = new GenericApplicationContext();
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(genericAppContext, false);
 

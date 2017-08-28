@@ -1,4 +1,4 @@
-package mobi.puut.rest;
+package mobi.puut.services.utils;
 
 import mobi.puut.util.annotation.RestService;
 

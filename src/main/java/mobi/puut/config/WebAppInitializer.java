@@ -21,10 +21,8 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
     private void addApacheCxfServlet(ServletContext servletContext) {
         CXFServlet cxfServlet = new CXFServlet();
-
         ServletRegistration.Dynamic appServlet = servletContext.addServlet("CXFServlet", cxfServlet);
         appServlet.setLoadOnStartup(1);
-
         Set<String> mappingConflicts = appServlet.addMapping(AppConfig.API_BASE);
     }
 
@@ -32,8 +30,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
 
         // register all the config classes here
-        appContext.register(AppConfig.class, DatabaseConfig.class);
+        appContext.register(AppConfig.class, DatabaseConfig.class, ServiceConfig.class);
         return appContext;
     }
-
 }

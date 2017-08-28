@@ -1,13 +1,14 @@
-package mobi.puut.services;
+package mobi.puut.services.impl;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import mobi.puut.database.*;
 import mobi.puut.entities.Status;
 import mobi.puut.entities.User;
 import mobi.puut.entities.WalletInfo;
-import mobi.puut.rest.WalletManager;
-import mobi.puut.rest.WalletModel;
+import mobi.puut.services.utils.WalletManager;
+import mobi.puut.services.utils.WalletModel;
+import mobi.puut.services.def.IWalletService;
+import mobi.puut.util.annotation.RestService;
 import org.bitcoinj.core.*;
 import org.bitcoinj.wallet.SendRequest;
 import org.bitcoinj.wallet.Wallet;
@@ -18,41 +19,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import javax.ws.rs.GET;
+import javax.ws.rs.core.Response;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static mobi.puut.rest.WalletManager.networkParameters;
+import static mobi.puut.services.utils.WalletManager.networkParameters;
 
 /**
  * Created by Chaklader on 6/24/17.
  */
 @Service("walletService")
+@RestService
 public class WalletServiceImpl implements IWalletService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private IUserDao IUserDao;
+    private mobi.puut.database.def.IUserDao IUserDao;
 
     @Autowired
-    private IStatusDao IStatusDao;
+    private mobi.puut.database.def.IStatusDao IStatusDao;
 
     @Autowired
-    private IWalletInfoDao IWalletInfoDao;
+    private mobi.puut.database.def.IWalletInfoDao IWalletInfoDao;
 
     private Map<String, WalletManager> genWalletMap = new ConcurrentHashMap<>();
 
     private Map<Long, WalletManager> walletMangersMap = new ConcurrentHashMap<>();
 
-    public List<Status> getWalletStatuses(final Long id) {
-        return IStatusDao.getByWalletId(id);
-    }
 
+    /**
+     * get the WalletInfo from the wallet Id
+     *
+     * @param walletId the wallet Id used to get the WalletInfo entity
+     * @return the WalletInfo entity
+     */
     public WalletInfo getWalletInfo(Long walletId) {
         return IWalletInfoDao.getById(walletId);
+    }
+
+    /**
+     * get the statuses (transactions) from the wallet Id
+     *
+     * @param id the Wallet id
+     * @return
+     */
+    public List<Status> getWalletStatuses(final Long id) {
+        return IStatusDao.getByWalletId(id);
     }
 
     /**
@@ -60,12 +74,8 @@ public class WalletServiceImpl implements IWalletService {
      */
     public List<WalletInfo> getAllWallets() {
 
-        try {
-            return IWalletInfoDao.getAllWallets();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
+        List<WalletInfo> walletInfos = IWalletInfoDao.getAllWallets();
+        return walletInfos;
     }
 
 
