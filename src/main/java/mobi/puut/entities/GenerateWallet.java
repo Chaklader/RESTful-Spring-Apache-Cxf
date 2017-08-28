@@ -1,17 +1,17 @@
 package mobi.puut.entities;
 
-public class CreateWalletWithNameAndCurrency {
+public class GenerateWallet {
 
     String walletName;
 
     String currencyName;
 
-    public CreateWalletWithNameAndCurrency(String walletName, String currencyName) {
+    public GenerateWallet(String walletName, String currencyName) {
         this.walletName = walletName;
         this.currencyName = currencyName;
     }
 
-    public CreateWalletWithNameAndCurrency() {
+    public GenerateWallet() {
     }
 
     public String getWalletName() {

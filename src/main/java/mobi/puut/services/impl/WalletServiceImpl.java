@@ -5,7 +5,7 @@ import com.google.common.util.concurrent.Futures;
 import mobi.puut.database.def.IStatusDao;
 import mobi.puut.database.def.IUserDao;
 import mobi.puut.database.def.IWalletInfoDao;
-import mobi.puut.entities.CreateWalletWithNameAndCurrency;
+import mobi.puut.entities.GenerateWallet;
 import mobi.puut.entities.Status;
 import mobi.puut.entities.User;
 import mobi.puut.entities.WalletInfo;
@@ -23,8 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nullable;
-import javax.ws.rs.Path;
-import java.lang.annotation.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -87,14 +85,14 @@ public class WalletServiceImpl implements IWalletService {
      * take wallet name and the ccurrency as input parameter and
      * generate WalletInfo entity for the respective parameters
      *
-     * @param createWalletWithNameAndCurrency
+     * @param generateWallet
      * @return
      */
-    public synchronized WalletInfo generateAddress(CreateWalletWithNameAndCurrency createWalletWithNameAndCurrency) {
+    public synchronized WalletInfo generateAddress(GenerateWallet generateWallet) {
 
-        String walletName = createWalletWithNameAndCurrency.getWalletName();
+        String walletName = generateWallet.getWalletName();
 
-        String currencyName = createWalletWithNameAndCurrency.getCurrencyName();
+        String currencyName = generateWallet.getCurrencyName();
 
         WalletInfo walletInfo = iWalletInfoDao.getWalletInfoWithWalletNameAndCurrency(walletName, currencyName);
 

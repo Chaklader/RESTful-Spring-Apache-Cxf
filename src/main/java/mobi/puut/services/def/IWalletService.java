@@ -1,13 +1,12 @@
 package mobi.puut.services.def;
 
-import mobi.puut.entities.CreateWalletWithNameAndCurrency;
+import mobi.puut.entities.GenerateWallet;
 import mobi.puut.entities.Status;
 import mobi.puut.entities.WalletInfo;
 import mobi.puut.services.utils.WalletModel;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.lang.annotation.*;
 import java.util.List;
 
 
@@ -38,12 +37,12 @@ public interface IWalletService {
     List<WalletInfo> getAllWallets();
 
 
-    // curl -H "Content-Type: application/json" -X POST -d '{"walletName": "Dhaka","currencyName":"Bitcoin"}' http://localhost:8080/rest/wallet/generateAddress
+    // curl -H "Content-Type: application/json" -X POST -d '{"walletName": "Arhaus","currencyName":"Bitcoin"}' http://localhost:8080/rest/wallet/generateAddress
     @POST
     @Path("generateAddress")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON})
-    WalletInfo generateAddress(CreateWalletWithNameAndCurrency createWalletWithNameAndCurrency);
+    WalletInfo generateAddress(GenerateWallet generateWallet);
 
 
     // curl -X GET http://localhost:8080/rest/wallet/currencyandname/puut45/Bitcoin | json
