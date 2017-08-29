@@ -60,7 +60,11 @@ public interface IWalletService {
     WalletModel sendMoney(@PathParam("walletId") final Long walletId, final SendMoney sendMoney);
 
 
-    // String getWalletBalanceById(final long id);
+    // curl -X GET http://localhost:8080/rest/wallet/balance/1 | json
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("balance/{walletId:[\\d]+}")
+    String getWalletBalanceById(@PathParam("walletId") final long id);
 
     // String getWalletsCount()
 

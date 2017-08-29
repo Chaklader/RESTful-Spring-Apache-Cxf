@@ -20,7 +20,6 @@ public interface IStatusService {
     List<StatusWrapper> getWalletStatusesById(@PathParam("walletId") final Long id);
 
 
-
     // curl -X GET http://localhost:8080/rest/service/1/blockchain/statuses | json
     @GET
     @Path("{walletId:[\\d]+}/blockchain/statuses")
