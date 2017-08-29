@@ -21,14 +21,14 @@ public interface IWalletService {
 
     // curl -X GET http://localhost:8080/rest/wallet/1/statuses | json
     @GET
-    @Path("{walletId}/statuses")
+    @Path("{walletId:[\\d]+}/statuses")
     @Produces(MediaType.APPLICATION_JSON)
     List<Status> getWalletStatuses(@PathParam("walletId") final Long id);
 
 
     // curl -X GET http://localhost:8080/rest/wallet/1 | json
     @GET
-    @Path("{walletId}")
+    @Path("{walletId:[\\d]+}")
     @Produces(MediaType.APPLICATION_JSON)
     WalletInfoWrapper getWalletInfo(@PathParam("walletId") Long walletId);
 
@@ -63,7 +63,11 @@ public interface IWalletService {
     @Produces({MediaType.APPLICATION_JSON})
     WalletModel sendMoney(@PathParam("walletId") final Long walletId, final SendMoney sendMoney);
 
-    WalletModel getWalletModel(final Long walletId);
 
-    void deleteWalletInfoById(Long id);
+    // curl -X DELETE http://localhost:8080/rest/wallet/delete/9
+    @DELETE
+    @Path("delete/{walletId:[\\d]+}")
+    void deleteWalletInfoById(@PathParam("walletId") Long id);
+
+    WalletModel getWalletModel(final Long walletId);
 }
