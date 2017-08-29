@@ -377,7 +377,6 @@ public class WalletServiceImpl implements IWalletService {
         iWalletInfoDao.deleteWalletInfoByWalletId(id);
     }
 
-    @Override
     public String getWalletBalanceById(final long id) {
 
         WalletModel walletModel = getWalletModel(id);
@@ -385,6 +384,13 @@ public class WalletServiceImpl implements IWalletService {
 
         return balance;
     }
+
+    public String getWalletsCount() {
+
+        List<WalletInfo> walletInfos = iWalletInfoDao.getAllWallets();
+        return String.valueOf(walletInfos.size());
+    }
+
 
     // TODO
     // write a RESTful method for the receiving operations
