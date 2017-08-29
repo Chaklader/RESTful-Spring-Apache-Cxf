@@ -56,7 +56,8 @@ public interface IWalletService {
                                                       @PathParam("currencyName") String currencyName);
 
 
-    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0","address":"mwCwTceJvYV27KXBc3NJZys6CjsgsoeHmf"}' http://localhost:8080/rest/wallet/sendMoney/1
+    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0","address":"mwCwTceJvYV27KXBc3NJZys6CjsgsoeHmf"}' http://localhost:8080/rest/wallet/sendMoney/9
+    @POST
     @Path("sendMoney/{walletId:[\\d]+}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces({MediaType.APPLICATION_JSON})
