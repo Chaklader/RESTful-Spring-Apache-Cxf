@@ -340,7 +340,7 @@ public class WalletServiceImpl implements IWalletService {
     }
 
     /**
-     * create instances in the wallet_info table with the wallet name and the address
+     * saveOrUpdate instances in the wallet_info table with the wallet name and the address
      *
      * @param walletName
      * @param address

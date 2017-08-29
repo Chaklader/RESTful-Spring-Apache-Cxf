@@ -570,7 +570,7 @@
 //
 //
 //    /*
-//    * entity to create new wallets with the name and the currency
+//    * entity to saveOrUpdate new wallets with the name and the currency
 //    * server code will generate an address for the wallet
 //    * */
 //    static class CreateWalletWithNameAndCurrency {

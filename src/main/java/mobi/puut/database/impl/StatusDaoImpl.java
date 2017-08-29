@@ -2,11 +2,13 @@ package mobi.puut.database.impl;
 
 import mobi.puut.database.def.IStatusDao;
 import mobi.puut.entities.Status;
+import mobi.puut.services.utils.wrappers.StatusWrapper;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,5 +52,22 @@ public class StatusDaoImpl implements IStatusDao {
                 .getResultList();
 
         return Objects.isNull(statuses) || statuses.isEmpty() ? false : true;
+    }
+
+    // get all the current statuses from the all users and the wallets
+    @SuppressWarnings("unchecked")
+    @Transactional(rollbackFor = Exception.class)
+    public List<StatusWrapper> getAllStatuses() {
+        List<Status> statuses = sessionFactory.getCurrentSession()
+                .createQuery("from Status").getResultList();
+
+        List<StatusWrapper> statusWrappers = new ArrayList<>();
+
+        statuses.forEach(status -> statusWrappers.add(new StatusWrapper(
+                status.getAddress().toString(),
+                String.valueOf(status.getTransaction()),
+                status.getTransaction().toString())));
+
+        return statusWrappers;
     }
 }

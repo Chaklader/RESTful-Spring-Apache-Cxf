@@ -1,6 +1,7 @@
 package mobi.puut.database.impl;
 
 import mobi.puut.database.def.IUserDao;
+import mobi.puut.entities.Status;
 import mobi.puut.entities.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class UserDaoImpl implements IUserDao {
      */
     @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdate(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        sessionFactory.getCurrentSession().saveOrUpdate(user);
     }
 
     /**
@@ -57,6 +58,7 @@ public class UserDaoImpl implements IUserDao {
         return sessionFactory.getCurrentSession()
                 .createQuery("from User").getResultList();
     }
+
 
     /**
      * @param id Id of the bitcoin wallet user

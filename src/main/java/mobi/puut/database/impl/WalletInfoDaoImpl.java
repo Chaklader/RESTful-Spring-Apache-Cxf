@@ -58,7 +58,7 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
     @Transactional(rollbackFor = Exception.class)
     public WalletInfo create(String name, String currency, String address) {
 
-        // create the WalletInfo entity with provided name and address
+        // saveOrUpdate the WalletInfo entity with provided name and address
         WalletInfo walletInfo = new WalletInfo();
         walletInfo.setAddress(address);
         walletInfo.setName(name);

@@ -19,13 +19,6 @@ import java.util.List;
 public interface IWalletService {
 
 
-    // curl -X GET http://localhost:8080/rest/wallet/1/statuses | json
-    @GET
-    @Path("{walletId:[\\d]+}/statuses")
-    @Produces(MediaType.APPLICATION_JSON)
-    List<Status> getWalletStatuses(@PathParam("walletId") final Long id);
-
-
     // curl -X GET http://localhost:8080/rest/wallet/1 | json
     @GET
     @Path("{walletId:[\\d]+}")
