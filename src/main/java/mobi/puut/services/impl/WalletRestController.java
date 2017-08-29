@@ -641,19 +641,8 @@
 //    }
 //
 //
-//    // TODO
-//    // write a RESTful method for the receiving operations
 //
-//    // TODO
-//    // write a RESTful method using the wallet id to get all the info's from the status table
-//
-//    // TODO
-//    // get the list of the transactions for the particular user
-//
-//    // TODO
-//    // Wire out every info of an wallet
-//    // Update the delete method to provide an option for the hard delete
-//    // so, even if the wallet has child tables e.g Status, everything will be deleted
+
 //}
 //
 //

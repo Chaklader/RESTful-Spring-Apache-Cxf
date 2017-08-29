@@ -12,9 +12,6 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 
-// @produce for get and put
-// @produce and @consume for post
-
 @Path("rest/wallet")
 public interface IWalletService {
 
@@ -49,6 +46,12 @@ public interface IWalletService {
                                                       @PathParam("currencyName") String currencyName);
 
 
+    // curl -X DELETE http://localhost:8080/rest/wallet/delete/9
+    @DELETE
+    @Path("delete/{walletId:[\\d]+}")
+    void deleteWalletInfoById(@PathParam("walletId") Long id);
+
+
     // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0","address":"mwCwTceJvYV27KXBc3NJZys6CjsgsoeHmf"}' http://localhost:8080/rest/wallet/sendMoney/9
     @POST
     @Path("sendMoney/{walletId:[\\d]+}")
@@ -57,10 +60,9 @@ public interface IWalletService {
     WalletModel sendMoney(@PathParam("walletId") final Long walletId, final SendMoney sendMoney);
 
 
-    // curl -X DELETE http://localhost:8080/rest/wallet/delete/9
-    @DELETE
-    @Path("delete/{walletId:[\\d]+}")
-    void deleteWalletInfoById(@PathParam("walletId") Long id);
+    // TODO
+    // write a RESTful method for the receiving operations
+
 
     WalletModel getWalletModel(final Long walletId);
 }
