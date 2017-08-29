@@ -61,7 +61,7 @@ public class AppConfig {
     }
 
     private List<Object> restServiceList(ApplicationContext appContext) {
-        return RestServiceBeanScanner.scan(appContext, AppConfig.RESOURCES_PACKAGE);
+         return RestServiceBeanScanner.scan(appContext, AppConfig.RESOURCES_PACKAGE);
     }
 
     private List<Object> restProviderList(final ApplicationContext appContext,
