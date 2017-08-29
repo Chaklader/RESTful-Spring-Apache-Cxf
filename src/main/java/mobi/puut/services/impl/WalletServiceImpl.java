@@ -5,14 +5,12 @@ import com.google.common.util.concurrent.Futures;
 import mobi.puut.database.def.IStatusDao;
 import mobi.puut.database.def.IUserDao;
 import mobi.puut.database.def.IWalletInfoDao;
-import mobi.puut.entities.GenerateWallet;
-import mobi.puut.entities.Status;
-import mobi.puut.entities.User;
-import mobi.puut.entities.WalletInfo;
+import mobi.puut.entities.*;
 import mobi.puut.services.utils.WalletManager;
 import mobi.puut.services.utils.WalletModel;
 import mobi.puut.services.def.IWalletService;
 //import mobi.puut.util.annotation.RestService;
+import mobi.puut.services.utils.wrappers.WalletInfoWrapper;
 import mobi.puut.util.annotation.RestService;
 import org.bitcoinj.core.*;
 import org.bitcoinj.wallet.SendRequest;
@@ -57,8 +55,17 @@ public class WalletServiceImpl implements IWalletService {
      * @param walletId the wallet Id used to get the WalletInfo entity
      * @return the WalletInfo entity
      */
-    public WalletInfo getWalletInfo(Long walletId) {
-        return iWalletInfoDao.getById(walletId);
+    public WalletInfoWrapper getWalletInfo(Long walletId) {
+        WalletInfo walletInfo = iWalletInfoDao.getById(walletId);
+
+
+        WalletInfoWrapper walletInfoWrapper = new WalletInfoWrapper();
+
+        walletInfoWrapper.setName(walletInfo.getName());
+        walletInfoWrapper.setAddress(walletInfo.getAddress());
+        walletInfoWrapper.setCurrencyName(walletInfo.getCurrency());
+
+        return walletInfoWrapper;
     }
 
     /**
@@ -74,10 +81,18 @@ public class WalletServiceImpl implements IWalletService {
     /**
      * @return return all the walletInfo as list
      */
-    public List<WalletInfo> getAllWallets() {
+    public List<WalletInfoWrapper> getAllWallets() {
 
         List<WalletInfo> walletInfos = iWalletInfoDao.getAllWallets();
-        return walletInfos;
+
+        List<WalletInfoWrapper> walletInfoWrappers = new ArrayList<>();
+
+        walletInfos.forEach(walletInfo ->
+                walletInfoWrappers.add(new WalletInfoWrapper(walletInfo.getName(),
+                        walletInfo.getAddress(), walletInfo.getCurrency()))
+        );
+
+        return walletInfoWrappers;
     }
 
 
@@ -180,15 +195,21 @@ public class WalletServiceImpl implements IWalletService {
     /**
      * Send money from the wallet using the wallet name, address and amount
      *
-     * @param walletId takes the wallet name
-     * @param amount   takes the sending amount
-     * @param address  takes address to send the money
+     * @param walletId  takes the wallet name
+     * @param sendMoney
      * @return return wallet model with subtracted transaction amount
      */
-    public WalletModel sendMoney(final Long walletId, final String amount, final String address) {
+
+    public WalletModel sendMoney(final Long walletId, final SendMoney sendMoney) {
+
+        String address = sendMoney.getAddress();
+
+        String amount = sendMoney.getAmount();
 
         User user = getCurrentUser();
+
         WalletModel model = null;
+
         WalletManager walletManager = getWalletManager(walletId);
 
         if (walletManager != null) {
@@ -235,6 +256,7 @@ public class WalletServiceImpl implements IWalletService {
      */
     protected void send(final User user, final Long walletId, final Wallet wallet,
                         final String address, final String amountStr) {
+
         // Address exception cannot happen as we validated it beforehand.
         Coin balance = wallet.getBalance();
 
@@ -296,7 +318,9 @@ public class WalletServiceImpl implements IWalletService {
         WalletManager walletManager = walletMangersMap.get(id);
 
         if (walletManager == null) {
+
             WalletInfo walletInfo = iWalletInfoDao.getById(id);
+
             if (walletInfo != null) {
                 String name = walletInfo.getName();
                 walletManager = WalletManager.setupWallet(name);
@@ -351,201 +375,6 @@ public class WalletServiceImpl implements IWalletService {
 
     public void deleteWalletInfoById(Long id) {
         iWalletInfoDao.deleteWalletInfoByWalletId(id);
-    }
-
-
-    /**
-     * a wrapper class of the WalletInfo class
-     */
-    private class WalletInfoWrapper {
-
-        String name;
-
-        String address;
-
-        // currency such as bitcoin, ethereum, litecoin, nem, ripple, dash etc
-        String currencyName;
-
-        public String getCurrencyName() {
-            return currencyName;
-        }
-
-        public void setCurrencyName(String currencyName) {
-            this.currencyName = currencyName;
-        }
-
-        public WalletInfoWrapper() {
-        }
-
-        public WalletInfoWrapper(String name, String address) {
-            this.name = name;
-            this.address = address;
-        }
-
-        public WalletInfoWrapper(String name, String address, String currencyName) {
-            this.name = name;
-            this.address = address;
-            this.currencyName = currencyName;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-
-    /**
-     * class to the wrap the User class for hiding the Ids
-     */
-    private class UserWrapper {
-
-        String name;
-
-        public UserWrapper(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-
-    /**
-     * a private claas for wrapping the WalletModel
-     */
-    private class WalletModelWrapper {
-
-        String address;
-
-        String balance;
-
-        public WalletModelWrapper(String address, String balance) {
-            this.address = address;
-            this.balance = balance;
-        }
-
-        public WalletModelWrapper() {
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getBalance() {
-            return balance;
-        }
-
-        public void setBalance(String balance) {
-            this.balance = balance;
-        }
-    }
-
-
-    // Wrapper class for the status table
-    private class StatusWrapper {
-
-        String address;
-
-        String balance;
-
-        String transactions;
-
-        public StatusWrapper(String address, String balance, String transactions) {
-
-            this.address = address;
-            this.balance = balance;
-            this.transactions = transactions;
-        }
-
-        public StatusWrapper() {
-        }
-
-
-        public StatusWrapper(String address, String balance) {
-            this.address = address;
-            this.balance = balance;
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getBalance() {
-            return balance;
-        }
-
-        public void setBalance(String balance) {
-            this.balance = balance;
-        }
-
-        public String getTransactions() {
-            return transactions;
-        }
-
-        public void setTransactions(String transactions) {
-            this.transactions = transactions;
-        }
-    }
-
-
-    /*
-    * the entity for the sending money to the external party
-    * */
-    static class SendMoney {
-
-        String address;
-
-        String amount;
-
-        public SendMoney(String address, String amount) {
-            this.address = address;
-            this.amount = amount;
-        }
-
-        public SendMoney() {
-
-        }
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getAmount() {
-            return amount;
-        }
-
-        public void setAmount(String amount) {
-            this.amount = amount;
-        }
     }
 
 

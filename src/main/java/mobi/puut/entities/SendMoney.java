@@ -9,7 +9,7 @@ public class SendMoney {
 
     String amount;
 
-    public SendMoney(String address, String amount) {
+    public SendMoney(String amount, String address) {
         this.address = address;
         this.amount = amount;
     }
