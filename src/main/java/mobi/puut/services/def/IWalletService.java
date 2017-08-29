@@ -60,9 +60,14 @@ public interface IWalletService {
     WalletModel sendMoney(@PathParam("walletId") final Long walletId, final SendMoney sendMoney);
 
 
-    // TODO
-    // write a RESTful method for the receiving operations
+    // String getWalletBalanceById(final long id);
+
+    // String getWalletsCount()
 
 
     WalletModel getWalletModel(final Long walletId);
+
+
+    // TODO
+    // write a RESTful method for the receiving operations
 }

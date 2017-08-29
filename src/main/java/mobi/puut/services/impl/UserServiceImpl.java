@@ -9,6 +9,8 @@ import mobi.puut.entities.Status;
 import mobi.puut.services.def.IUserService;
 import mobi.puut.services.utils.wrappers.UserWrapper;
 import mobi.puut.util.annotation.RestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import mobi.puut.entities.User;
 @RestService
 @Service("userService")
 public class UserServiceImpl implements IUserService {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     public IUserDao userDao;

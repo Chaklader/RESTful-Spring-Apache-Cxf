@@ -313,7 +313,7 @@ public class WalletServiceImpl implements IWalletService {
      * @param id
      * @return
      */
-    protected synchronized WalletManager getWalletManager(final Long id) {
+    public synchronized WalletManager getWalletManager(final Long id) {
 
         WalletManager walletManager = walletMangersMap.get(id);
 
