@@ -1,26 +1,29 @@
-package mobi.puut.util;
+package mobi.puut.services.utils;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
-import javax.ws.rs.ext.Provider;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class RestProviderBeanScanner {
+public final class RestServiceBeanScanner {
 
-    private RestProviderBeanScanner() { }
+    private RestServiceBeanScanner() { }
+
     public static List<Object> scan(ApplicationContext applicationContext, String... basePackages) {
         GenericApplicationContext genericAppContext = new GenericApplicationContext();
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(genericAppContext, false);
 
-        scanner.addIncludeFilter(new AnnotationTypeFilter(Provider.class));
+        scanner.addIncludeFilter(new AnnotationTypeFilter(RestService.class));
         scanner.scan(basePackages);
         genericAppContext.setParent(applicationContext);
         genericAppContext.refresh();
 
-        return new ArrayList<>(genericAppContext.getBeansWithAnnotation(Provider.class).values());
+        List<Object> restResources = new ArrayList<>(genericAppContext.getBeansWithAnnotation(RestService.class).values());
+
+        return restResources;
     }
+
 }

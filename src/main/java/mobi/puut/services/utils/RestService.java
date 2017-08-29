@@ -1,4 +1,4 @@
-package mobi.puut.util.annotation;
+package mobi.puut.services.utils;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

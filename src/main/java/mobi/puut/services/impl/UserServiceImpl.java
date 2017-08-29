@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 import mobi.puut.database.def.IUserDao;
-import mobi.puut.entities.Status;
 import mobi.puut.services.def.IUserService;
 import mobi.puut.services.utils.wrappers.UserWrapper;
-import mobi.puut.util.annotation.RestService;
+import mobi.puut.services.utils.RestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

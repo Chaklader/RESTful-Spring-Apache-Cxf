@@ -30,7 +30,7 @@ public interface IWalletService {
     List<WalletInfoWrapper> getAllWallets();
 
 
-    // curl -H "Content-Type: application/json" -X POST -d '{"walletName": "Arhaus","currencyName":"Bitcoin"}' http://localhost:8080/rest/wallet/generateAddress
+    // curl -H "Content-Type: application/json" -X POST -d '{"walletName": "Rome","currencyName":"Bitcoin"}' http://localhost:8080/rest/wallet/generateAddress
     @POST
     @Path("generateAddress")
     @Consumes(MediaType.APPLICATION_JSON)

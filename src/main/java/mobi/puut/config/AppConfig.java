@@ -1,14 +1,13 @@
 package mobi.puut.config;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import mobi.puut.util.RestProviderBeanScanner;
-import mobi.puut.util.RestServiceBeanScanner;
+import mobi.puut.services.utils.RestProviderBeanScanner;
+import mobi.puut.services.utils.RestServiceBeanScanner;
 import org.apache.cxf.bus.spring.SpringBus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
