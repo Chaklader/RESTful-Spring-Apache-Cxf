@@ -27,11 +27,11 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
     @Autowired
     private SessionFactory sessionFactory;
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public List<WalletInfo> getAllWallets() {
-//        return sessionFactory.getCurrentSession()
-//                .createQuery("from WalletInfo").getResultList();
-//    }
+    @Transactional(rollbackFor = Exception.class)
+    public List<WalletInfo> getAllWallets() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from WalletInfo").getResultList();
+    }
 
 //    @Transactional(rollbackFor = Exception.class)
 //    public WalletInfo getByName(String walletName) {
@@ -42,10 +42,10 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
 //                ? null : walletInfos.get(0);
 //    }
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public WalletInfo getById(final Long id) {
-//        return sessionFactory.getCurrentSession().get(WalletInfo.class, id);
-//    }
+    @Transactional(rollbackFor = Exception.class)
+    public WalletInfo getById(final Long id) {
+        return sessionFactory.getCurrentSession().get(WalletInfo.class, id);
+    }
 
     /**
      * @param code    name of the wallet

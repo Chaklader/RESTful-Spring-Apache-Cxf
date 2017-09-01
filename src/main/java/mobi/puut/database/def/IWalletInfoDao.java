@@ -1,16 +1,17 @@
 package mobi.puut.database.def;
 
 import mobi.puut.entities.WalletInfo;
+
 import java.util.List;
 
 
 public interface IWalletInfoDao {
 
-//    List<WalletInfo> getAllWallets();
-//
+    List<WalletInfo> getAllWallets();
+
 //    WalletInfo getByName(String walletName);
 //
-//    WalletInfo getById(final Long id);
+    WalletInfo getById(final Long id);
 
     WalletInfo create(String name, String currency, String address);
 //    WalletInfo create(String name, String currency, String address);

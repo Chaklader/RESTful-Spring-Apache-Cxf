@@ -16,18 +16,18 @@ import java.util.List;
 public interface IWalletService {
 
 
-    // curl -X GET http://localhost:8080/rest/wallet/1 | json
-//    @GET
-//    @Path("{walletId:[\\d]+}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    WalletInfoWrapper getWalletInfo(@PathParam("walletId") Long walletId);
-
-
     // curl -X GET http://localhost:8080/rest/wallet/wallets | json
-//    @GET
-//    @Path("wallets")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    List<WalletInfoWrapper> getAllWallets();
+    @GET
+    @Path("wallets")
+    @Produces(MediaType.APPLICATION_JSON)
+    List<WalletInfo> getAllWallets();
+
+
+    //  curl -X GET http://localhost:8080/rest/wallet/1 | json
+    @GET
+    @Path("{walletId:[\\d]+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    WalletInfo getWalletInfo(@PathParam("walletId") Long walletId);
 
 
     // curl -H "Content-Type: application/json" -X POST -d '{"currencyName":"Bitcoin"}' http://localhost:8080/rest/wallet/generateAddress
@@ -74,7 +74,7 @@ public interface IWalletService {
 //    String getWalletsCount();
 
 
-//    WalletModel getWalletModel(final Long walletId);
+    WalletModel getWalletModel(final Long walletId);
 
 
     // TODO

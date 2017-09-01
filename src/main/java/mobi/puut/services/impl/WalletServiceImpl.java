@@ -32,8 +32,8 @@ import static mobi.puut.services.utils.WalletManager.networkParameters;
 @RestService
 public class WalletServiceImpl implements IWalletService {
 
+    // class to generate random file name
     RandomString randomString = new RandomString();
-
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -46,7 +46,8 @@ public class WalletServiceImpl implements IWalletService {
     @Autowired
     private IWalletInfoDao iWalletInfoDao;
 
-    private Map<String, WalletManager> genWalletMap = new ConcurrentHashMap<>();
+//    private Map<String, WalletManager> genWalletMap = new ConcurrentHashMap<>();
+
 
     private Map<Long, WalletManager> walletMangersMap = new ConcurrentHashMap<>();
 
@@ -57,18 +58,10 @@ public class WalletServiceImpl implements IWalletService {
      * @param walletId the wallet Id used to get the WalletInfo entity
      * @return the WalletInfo entity
      */
-//    public WalletInfoWrapper getWalletInfo(Long walletId) {
-//        WalletInfo walletInfo = iWalletInfoDao.getById(walletId);
-//
-//
-//        WalletInfoWrapper walletInfoWrapper = new WalletInfoWrapper();
-//
-//        walletInfoWrapper.setName(walletInfo.getName());
-//        walletInfoWrapper.setAddress(walletInfo.getAddress());
-//        walletInfoWrapper.setCurrencyName(walletInfo.getCurrency());
-//
-//        return walletInfoWrapper;
-//    }
+    public WalletInfo getWalletInfo(Long walletId) {
+        WalletInfo walletInfo = iWalletInfoDao.getById(walletId);
+        return walletInfo;
+    }
 
     /**
      * get the statuses (transactions) from the wallet Id
@@ -83,19 +76,11 @@ public class WalletServiceImpl implements IWalletService {
     /**
      * @return return all the walletInfo as list
      */
-//    public List<WalletInfoWrapper> getAllWallets() {
-//
-//        List<WalletInfo> walletInfos = iWalletInfoDao.getAllWallets();
-//
-//        List<WalletInfoWrapper> walletInfoWrappers = new ArrayList<>();
-//
-//        walletInfos.forEach(walletInfo ->
-//                walletInfoWrappers.add(new WalletInfoWrapper(walletInfo.getName(),
-//                        walletInfo.getAddress(), walletInfo.getCurrency()))
-//        );
-//
-//        return walletInfoWrappers;
-//    }
+    public List<WalletInfo> getAllWallets() {
+
+        List<WalletInfo> walletInfos = iWalletInfoDao.getAllWallets();
+        return walletInfos;
+    }
 
 
     /**
@@ -111,22 +96,18 @@ public class WalletServiceImpl implements IWalletService {
 
         final WalletInfo walletInfo = new WalletInfo();
 
-        String walletName = randomString.nextString();
+        String fileDirectoryName = randomString.nextString();
 
         String currencyName = generateWallet.getCurrencyName();
 
-//        WalletInfo walletInfoDb = iWalletInfoDao.getWalletInfoWithWalletNameAndCurrency(walletName, currencyName);
+        String currency = currencyName.toUpperCase();
 
-        WalletInfo walletInfoDb = null;
+        switch (currency) {
 
-        if (walletInfoDb == null && genWalletMap.get(walletName) == null) {
-
-            String currency = currencyName.toUpperCase();
-
-            if (currency.equals("BITCOIN")) {
+            case "BITCOIN":
 
                 try {
-                    final WalletManager walletManager = WalletManager.setupWallet(walletName);
+                    final WalletManager walletManager = WalletManager.setupWallet(fileDirectoryName);
 
                     walletManager.addWalletSetupCompletedListener((wallet) -> {
 
@@ -140,13 +121,13 @@ public class WalletServiceImpl implements IWalletService {
                         walletInfo.setCurrency(newWallet.getCurrency());
 
                         walletMangersMap.put(newWallet.getId(), walletManager);
-                        genWalletMap.remove(walletName);
+//                        genWalletMap.remove(fileDirectoryName);
 
                         // start the count down
                         finshedSetup.countDown();
                     });
 
-                    genWalletMap.put(walletName, walletManager);
+//                    genWalletMap.put(fileDirectoryName, walletManager);
 
                     // wait for the completion of the thread
                     finshedSetup.await();
@@ -154,14 +135,53 @@ public class WalletServiceImpl implements IWalletService {
                 } catch (InterruptedException ex) {
 
                 }
-            } else if (currency.equals("ETHEREUM")) {
-                return walletInfo;
-            } else {
-                return walletInfo;
-            }
+                break;
+
+            case "ETHEREUM":
+                break;
+
+            default:
+                break;
         }
 
-        return walletInfo;
+//        if (currency.equals("BITCOIN")) {
+//
+//            try {
+//                final WalletManager walletManager = WalletManager.setupWallet(fileDirectoryName);
+//
+//                walletManager.addWalletSetupCompletedListener((wallet) -> {
+//
+//                    Address address = wallet.currentReceiveAddress();
+//                    WalletInfo newWallet = createWalletInfo("BTC", currencyName, address.toString());
+//
+//                    // set the properties of the walletInfo
+//                    walletInfo.setId(newWallet.getId());
+//                    walletInfo.setCode(newWallet.getCode());
+//                    walletInfo.setAddress(newWallet.getAddress());
+//                    walletInfo.setCurrency(newWallet.getCurrency());
+//
+//                    walletMangersMap.put(newWallet.getId(), walletManager);
+//                    genWalletMap.remove(fileDirectoryName);
+//
+//                    // start the count down
+//                    finshedSetup.countDown();
+//                });
+//
+//                genWalletMap.put(fileDirectoryName, walletManager);
+//
+//                // wait for the completion of the thread
+//                finshedSetup.await();
+//                return walletInfo;
+//            } catch (InterruptedException ex) {
+//
+//            }
+//        } else if (currency.equals("ETHEREUM")) {
+//            return walletInfo;
+//        } else {
+//            return walletInfo;
+//        }
+
+        return null;
     }
 
 
@@ -175,17 +195,17 @@ public class WalletServiceImpl implements IWalletService {
      * @param walletId
      * @return
      */
-//    public WalletModel getWalletModel(final Long walletId) {
-//
-//        WalletManager walletManager = getWalletManager(walletId);
-//        WalletModel model = walletManager == null ? null : walletManager.getModel();
-//
-//        if (Objects.isNull(model)) {
-//            logger.info("Wallet with the Id {} is not available", walletId);
-//        }
-//
-//        return model;
-//    }
+    public WalletModel getWalletModel(final Long walletId) {
+
+        WalletManager walletManager = getWalletManager(walletId);
+        WalletModel model = walletManager == null ? null : walletManager.getModel();
+
+        if (Objects.isNull(model)) {
+            logger.info("Wallet with the Id {} is not available", walletId);
+        }
+
+        return model;
+    }
 
     /**
      * Send money from the wallet using the wallet name, address and amount
@@ -308,22 +328,23 @@ public class WalletServiceImpl implements IWalletService {
      * @param id
      * @return
      */
-//    public synchronized WalletManager getWalletManager(final Long id) {
-//
-//        WalletManager walletManager = walletMangersMap.get(id);
-//
-//        if (walletManager == null) {
-//
+    public synchronized WalletManager getWalletManager(final Long id) {
+
+        WalletManager walletManager = walletMangersMap.get(id);
+
+        if (walletManager == null) {
+
 //            WalletInfo walletInfo = iWalletInfoDao.getById(id);
-//
-//            if (walletInfo != null) {
-//                String name = walletInfo.getName();
-//                walletManager = WalletManager.setupWallet(name);
-//                walletMangersMap.put(walletInfo.getId(), walletManager);
-//            }
-//        }
-//        return walletManager;
-//    }
+            WalletInfo walletInfo = null;
+
+            if (walletInfo != null) {
+                String name = walletInfo.getCode();
+                walletManager = WalletManager.setupWallet(name);
+                walletMangersMap.put(walletInfo.getId(), walletManager);
+            }
+        }
+        return walletManager;
+    }
 
     /**
      * @return return the user of concern

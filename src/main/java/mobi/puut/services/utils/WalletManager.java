@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class WalletManager {
 
-    // custom logger for the class
     private static final Logger logger = LoggerFactory.getLogger(WalletManager.class);
 
     public static WalletAppKit bitcoin;
@@ -37,12 +36,12 @@ public class WalletManager {
 
     private List<WalletSetupCompletedListener> setupCompletedListeners = Collections.synchronizedList(new LinkedList<>());
 
-    public static WalletManager setupWallet(final String walletName) {
+    public static WalletManager setupWallet(final String fileName) {
 
         logger.info("Setup Wallet");
 
         WalletManager walletManager = new WalletManager();
-        walletManager.setupWalletKit(walletName);
+        walletManager.setupWalletKit(fileName);
 
         try {
             if (walletManager.bitcoin.isChainFileLocked()) {
@@ -62,12 +61,12 @@ public class WalletManager {
     }
 
     /**
-     * @param walletId takes wallet ID and generate the directory for the wallet
+     * @param fileId takes wallet ID and generate the directory for the wallet
      * @return reutrn the file direcotry
      */
-    protected File getWalletDirectory(final String walletId) {
+    protected File getWalletDirectory(final String fileId) {
 
-        File dir = new File(walletId);
+        File dir = new File(fileId);
         if (!dir.exists()) {
             dir.mkdir();
         }
@@ -87,11 +86,11 @@ public class WalletManager {
     }
 
     /**
-     * @param walletId set up the wallet for the provided wallet ID
+     * @param fileId set up the wallet for the provided wallet ID
      */
-    private void setupWalletKit(final String walletId) {
+    private void setupWalletKit(final String fileId) {
 
-        File directory = getWalletDirectory(walletId);
+        File directory = getWalletDirectory(fileId);
 
         // if the seed is not null, that means we are restoring from the backup
         bitcoin = new WalletAppKit(networkParameters, directory, WALLET_FILE_NAME) {
