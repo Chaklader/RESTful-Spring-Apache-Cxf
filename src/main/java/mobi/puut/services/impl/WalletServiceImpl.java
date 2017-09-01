@@ -362,6 +362,11 @@ public class WalletServiceImpl implements IWalletService {
         return balance;
     }
 
+    @Override
+    public WalletInfo getWalletInfoByCurrencyAndAddress(String currencyName, String address) {
+        return iWalletInfoDao.getWalletInfoByCurrencyAndAddress(currencyName, address);
+    }
+
     public String getWalletsCount() {
         List<WalletInfo> walletInfos = iWalletInfoDao.getAllWallets();
         return String.valueOf(walletInfos.size());

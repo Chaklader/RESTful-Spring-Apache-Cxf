@@ -73,25 +73,16 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
                 .setParameter("id", walletId).executeUpdate();
     }
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public WalletInfo getWalletInfoWithWalletNameAndCurrency(String code, String currencyName) {
-//
-//        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession()
-//                .createQuery("from WalletInfo where code = :code and currency = :currency")
-//                .setParameter("code", code)
-//                .setParameter("currency", currencyName).getResultList();
-//
-//        return Objects.isNull(walletInfos) || walletInfos.isEmpty() ?
-//                null : walletInfos.get(0);
-//    }
 
+    @Transactional(rollbackFor = Exception.class)
+    public WalletInfo getWalletInfoByCurrencyAndAddress(String currency, String address) {
 
-    //    @Transactional(rollbackFor = Exception.class)
-//    public WalletInfo getByName(String walletName) {
-//        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession().createQuery("from WalletInfo where code = :code")
-//                .setParameter("name", walletName).getResultList();
-//
-//        return Objects.isNull(walletInfos) || walletInfos.isEmpty()
-//                ? null : walletInfos.get(0);
-//    }
+        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession()
+                .createQuery("from WalletInfo where currency = :currency and address = :address")
+                .setParameter("currency", currency)
+                .setParameter("address", address).getResultList();
+
+        return Objects.isNull(walletInfos) || walletInfos.isEmpty() ?
+                null : walletInfos.get(0);
+    }
 }

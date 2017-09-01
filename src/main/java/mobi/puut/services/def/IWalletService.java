@@ -65,6 +65,13 @@ public interface IWalletService {
     @Path("count")
     String getWalletsCount();
 
+
+    // curl -X GET http://localhost:8080/rest/wallet/balance/1 | json
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("addressAndCurrency/{currency}/{address}")
+    WalletInfo getWalletInfoByCurrencyAndAddress(@PathParam("currency") String currencyName, @PathParam("address") String address);
+
     WalletModel getWalletModel(final Long walletId);
 
     // TODO

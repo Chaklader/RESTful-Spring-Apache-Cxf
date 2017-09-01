@@ -17,5 +17,5 @@ public interface IWalletInfoDao {
 
     void deleteWalletInfoByWalletId(Long walletId);
 
-//    WalletInfo getWalletInfoWithWalletNameAndCurrency(String walletName, String currencyName);
+    WalletInfo getWalletInfoByCurrencyAndAddress(String currency, String address);
 }
