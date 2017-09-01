@@ -166,6 +166,8 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>6.0.6</version>
         </dependency>
+
+        <!--Hibernate dependencies-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
@@ -176,34 +178,6 @@
             <artifactId>hibernate-validator</artifactId>
             <version>5.4.1.Final</version>
         </dependency>
-
-
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>slf4j-api</artifactId>-->
-        <!--<version>1.7.20</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>org.slf4j</groupId>-->
-        <!--<artifactId>jcl-over-slf4j</artifactId>-->
-        <!--<version>1.7.20</version>-->
-        <!--<scope>runtime</scope>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>ch.qos.logback</groupId>-->
-        <!--<artifactId>logback-classic</artifactId>-->
-        <!--<version>${ch.qos.logback-version}</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>javax.servlet</groupId>-->
-        <!--<artifactId>javax.servlet-api</artifactId>-->
-        <!--<version>${servlet-version}</version>-->
-        <!--<scope>provided</scope>-->
-        <!--</dependency>-->
-
 
         <!--web API dependencies-->
         <dependency>

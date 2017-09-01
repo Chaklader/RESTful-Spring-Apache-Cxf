@@ -65,10 +65,11 @@ public interface IWalletService {
     @Path("count")
     String getWalletsCount();
 
-
     WalletModel getWalletModel(final Long walletId);
-
 
     // TODO
     // write a RESTful method for the receiving operations
+
+    // TODO: 9/1/17
+    // remove the annotation @RestService
 }
