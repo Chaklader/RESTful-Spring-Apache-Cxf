@@ -9,14 +9,13 @@ public interface IWalletInfoDao {
 
     List<WalletInfo> getAllWallets();
 
-//    WalletInfo getByName(String walletName);
+    //    WalletInfo getByName(String walletName);
 //
     WalletInfo getById(final Long id);
 
-    WalletInfo create(String name, String currency, String address);
-//    WalletInfo create(String name, String currency, String address);
+    WalletInfo create(String code, String currency, String address);
 
-//    void deleteWalletInfoByWalletId(Long walletId);
-//
+    void deleteWalletInfoByWalletId(Long walletId);
+
 //    WalletInfo getWalletInfoWithWalletNameAndCurrency(String walletName, String currencyName);
 }

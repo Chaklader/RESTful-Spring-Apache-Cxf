@@ -1,5 +1,6 @@
 package mobi.puut.database.impl;
 
+import mobi.puut.database.def.IStatusDao;
 import mobi.puut.database.def.IWalletInfoDao;
 import mobi.puut.entities.WalletInfo;
 import org.hibernate.SessionFactory;
@@ -21,8 +22,8 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
     // provide a logger for the class
     private final Logger loggger = LoggerFactory.getLogger(getClass());
 
-//    @Autowired
-//    mobi.puut.database.def.IStatusDao IStatusDao;
+    @Autowired
+    private IStatusDao iStatusDao;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -32,15 +33,6 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
         return sessionFactory.getCurrentSession()
                 .createQuery("from WalletInfo").getResultList();
     }
-
-//    @Transactional(rollbackFor = Exception.class)
-//    public WalletInfo getByName(String walletName) {
-//        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession().createQuery("from WalletInfo where code = :code")
-//                .setParameter("name", walletName).getResultList();
-//
-//        return Objects.isNull(walletInfos) || walletInfos.isEmpty()
-//                ? null : walletInfos.get(0);
-//    }
 
     @Transactional(rollbackFor = Exception.class)
     public WalletInfo getById(final Long id) {
@@ -66,20 +58,20 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
         return walletInfo;
     }
 
-//    @Transactional(rollbackFor = Exception.class)
-//    public void deleteWalletInfoByWalletId(Long walletId) {
-//
-//        // transaction is recored in the status table with the wallet Id
-//        // we cant delete the WalletInfo entity as being used foreign key in the Status table
-//        if (IStatusDao.getStatusRetentionInfoByWalletId(walletId)) {
-//            loggger.info("\n\nUnable to delete the wallet with id {} as being used foregin key " +
-//                    "in the Status table\n\n", walletId);
-//            return;
-//        }
-//
-//        sessionFactory.getCurrentSession().createQuery("delete WalletInfo where id = :id")
-//                .setParameter("id", walletId).executeUpdate();
-//    }
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteWalletInfoByWalletId(Long walletId) {
+
+        // transaction is recored in the status table with the wallet Id
+        // we cant delete the WalletInfo entity as being used foreign key in the Status table
+        if (iStatusDao.getStatusRetentionInfoByWalletId(walletId)) {
+            loggger.info("\n\nUnable to delete the wallet with id {} as being used foregin key " +
+                    "in the Status table\n\n", walletId);
+            return;
+        }
+
+        sessionFactory.getCurrentSession().createQuery("delete WalletInfo where id = :id")
+                .setParameter("id", walletId).executeUpdate();
+    }
 
 //    @Transactional(rollbackFor = Exception.class)
 //    public WalletInfo getWalletInfoWithWalletNameAndCurrency(String code, String currencyName) {
@@ -91,5 +83,15 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
 //
 //        return Objects.isNull(walletInfos) || walletInfos.isEmpty() ?
 //                null : walletInfos.get(0);
+//    }
+
+
+    //    @Transactional(rollbackFor = Exception.class)
+//    public WalletInfo getByName(String walletName) {
+//        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession().createQuery("from WalletInfo where code = :code")
+//                .setParameter("name", walletName).getResultList();
+//
+//        return Objects.isNull(walletInfos) || walletInfos.isEmpty()
+//                ? null : walletInfos.get(0);
 //    }
 }

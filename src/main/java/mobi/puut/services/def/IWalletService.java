@@ -38,40 +38,32 @@ public interface IWalletService {
     WalletInfo generateAddress(GenerateWallet generateWallet);
 
 
-    // curl -X GET http://localhost:8080/rest/wallet/currencyandname/puut45/Bitcoin | json
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("currencyandname/{walletName}/{currencyName}")
-//    WalletInfo getWalletInfoWithCurrencyAndWalletName(@PathParam("walletName") String walletName,
-//                                                      @PathParam("currencyName") String currencyName);
+    // curl -X DELETE http://localhost:8080/rest/wallet/delete/42
+    @DELETE
+    @Path("delete/{walletId:[\\d]+}")
+    void deleteWalletInfoById(@PathParam("walletId") Long id);
 
 
-    // curl -X DELETE http://localhost:8080/rest/wallet/delete/9
-//    @DELETE
-//    @Path("delete/{walletId:[\\d]+}")
-//    void deleteWalletInfoById(@PathParam("walletId") Long id);
-
-
-    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0","address":"mwCwTceJvYV27KXBc3NJZys6CjsgsoeHmf"}' http://localhost:8080/rest/wallet/sendMoney/9
-//    @POST
-//    @Path("sendMoney/{walletId:[\\d]+}")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces({MediaType.APPLICATION_JSON})
-//    WalletModel sendMoney(@PathParam("walletId") final Long walletId, final SendMoney sendMoney);
+    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0.25","address":"mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"}' http://localhost:8080/rest/wallet/sendMoney/1
+    @POST
+    @Path("sendMoney/{walletId:[\\d]+}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON})
+    WalletModel sendMoney(@PathParam("walletId") final Long walletId, final SendMoney sendMoney);
 
 
     // curl -X GET http://localhost:8080/rest/wallet/balance/1 | json
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("balance/{walletId:[\\d]+}")
-//    String getWalletBalanceById(@PathParam("walletId") final long id);
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("balance/{walletId:[\\d]+}")
+    String getWalletBalanceById(@PathParam("walletId") final long id);
 
 
     // curl -X GET http://localhost:8080/rest/wallet/count | json
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("count")
-//    String getWalletsCount();
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("count")
+    String getWalletsCount();
 
 
     WalletModel getWalletModel(final Long walletId);
