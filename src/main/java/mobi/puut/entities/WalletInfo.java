@@ -19,8 +19,8 @@ public class WalletInfo {
     private Long id;
 
     @NotNull
-    @Column(name = "name")
-    private String name;
+    @Column(name = "code")
+    private String code;
 
     @NotNull
     @Column(name = "address")
@@ -35,13 +35,13 @@ public class WalletInfo {
     }
 
     public WalletInfo(@NotNull String name, @NotNull String address, @NotNull String currency) {
-        this.name = name;
+        this.code = name;
         this.address = address;
         this.currency = currency;
     }
 
     public WalletInfo(@NotNull String name, @NotNull String address) {
-        this.name = name;
+        this.code = name;
         this.address = address;
     }
 
@@ -52,12 +52,12 @@ public class WalletInfo {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCode() {
+        return code;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getAddress() {

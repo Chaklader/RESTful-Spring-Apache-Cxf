@@ -21,47 +21,44 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
     // provide a logger for the class
     private final Logger loggger = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    mobi.puut.database.def.IStatusDao IStatusDao;
+//    @Autowired
+//    mobi.puut.database.def.IStatusDao IStatusDao;
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    @Transactional(rollbackFor = Exception.class)
-    public List<WalletInfo> getAllWallets() {
+//    @Transactional(rollbackFor = Exception.class)
+//    public List<WalletInfo> getAllWallets() {
+//        return sessionFactory.getCurrentSession()
+//                .createQuery("from WalletInfo").getResultList();
+//    }
 
-//        return sessionFactory.getCurrentSession().createCriteria(WalletInfo.class).list();
+//    @Transactional(rollbackFor = Exception.class)
+//    public WalletInfo getByName(String walletName) {
+//        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession().createQuery("from WalletInfo where code = :code")
+//                .setParameter("name", walletName).getResultList();
+//
+//        return Objects.isNull(walletInfos) || walletInfos.isEmpty()
+//                ? null : walletInfos.get(0);
+//    }
 
-        return sessionFactory.getCurrentSession()
-                .createQuery("from WalletInfo").getResultList();
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public WalletInfo getByName(String walletName) {
-        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession().createQuery("from WalletInfo where name = :name")
-                .setParameter("name", walletName).getResultList();
-
-        return Objects.isNull(walletInfos) || walletInfos.isEmpty()
-                ? null : walletInfos.get(0);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public WalletInfo getById(final Long id) {
-        return sessionFactory.getCurrentSession().get(WalletInfo.class, id);
-    }
+//    @Transactional(rollbackFor = Exception.class)
+//    public WalletInfo getById(final Long id) {
+//        return sessionFactory.getCurrentSession().get(WalletInfo.class, id);
+//    }
 
     /**
-     * @param name    name of the wallet
+     * @param code    name of the wallet
      * @param address address of the wallet
      * @return return the created WalletInfo object with provided name and address
      */
     @Transactional(rollbackFor = Exception.class)
-    public WalletInfo create(String name, String currency, String address) {
+    public WalletInfo create(String code, String currency, String address) {
 
         // saveOrUpdate the WalletInfo entity with provided name and address
         WalletInfo walletInfo = new WalletInfo();
         walletInfo.setAddress(address);
-        walletInfo.setName(name);
+        walletInfo.setCode(code);
         walletInfo.setCurrency(currency);
 
         // persist the created instance into the database
@@ -69,30 +66,30 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
         return walletInfo;
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteWalletInfoByWalletId(Long walletId) {
+//    @Transactional(rollbackFor = Exception.class)
+//    public void deleteWalletInfoByWalletId(Long walletId) {
+//
+//        // transaction is recored in the status table with the wallet Id
+//        // we cant delete the WalletInfo entity as being used foreign key in the Status table
+//        if (IStatusDao.getStatusRetentionInfoByWalletId(walletId)) {
+//            loggger.info("\n\nUnable to delete the wallet with id {} as being used foregin key " +
+//                    "in the Status table\n\n", walletId);
+//            return;
+//        }
+//
+//        sessionFactory.getCurrentSession().createQuery("delete WalletInfo where id = :id")
+//                .setParameter("id", walletId).executeUpdate();
+//    }
 
-        // transaction is recored in the status table with the wallet Id
-        // we cant delete the WalletInfo entity as being used foreign key in the Status table
-        if (IStatusDao.getStatusRetentionInfoByWalletId(walletId)) {
-            loggger.info("\n\nUnable to delete the wallet with id {} as being used foregin key " +
-                    "in the Status table\n\n", walletId);
-            return;
-        }
-
-        sessionFactory.getCurrentSession().createQuery("delete WalletInfo where id = :id")
-                .setParameter("id", walletId).executeUpdate();
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    public WalletInfo getWalletInfoWithWalletNameAndCurrency(String walletName, String currencyName) {
-
-        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession()
-                .createQuery("from WalletInfo where name = :name and currency = :currency")
-                .setParameter("name", walletName)
-                .setParameter("currency", currencyName).getResultList();
-
-        return Objects.isNull(walletInfos) || walletInfos.isEmpty() ?
-                null : walletInfos.get(0);
-    }
+//    @Transactional(rollbackFor = Exception.class)
+//    public WalletInfo getWalletInfoWithWalletNameAndCurrency(String code, String currencyName) {
+//
+//        List<WalletInfo> walletInfos = sessionFactory.getCurrentSession()
+//                .createQuery("from WalletInfo where code = :code and currency = :currency")
+//                .setParameter("code", code)
+//                .setParameter("currency", currencyName).getResultList();
+//
+//        return Objects.isNull(walletInfos) || walletInfos.isEmpty() ?
+//                null : walletInfos.get(0);
+//    }
 }

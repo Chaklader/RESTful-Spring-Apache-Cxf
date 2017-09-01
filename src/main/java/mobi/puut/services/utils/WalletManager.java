@@ -86,7 +86,6 @@ public class WalletManager {
         setupCompletedListeners.add(listener);
     }
 
-
     /**
      * @param walletId set up the wallet for the provided wallet ID
      */
