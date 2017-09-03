@@ -1,6 +1,6 @@
 package mobi.puut.services.impl;
 
-import mobi.puut.database.def.IStatusDao;
+import mobi.puut.database.def.IStatusData;
 import mobi.puut.entities.Status;
 import mobi.puut.services.def.IStatusService;
 import mobi.puut.services.def.IWalletService;
@@ -25,7 +25,7 @@ public class StatusServiceImpl implements IStatusService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private IStatusDao iStatusDao;
+    private IStatusData iStatusData;
 
     @Autowired
     private IWalletService iWalletService;
@@ -61,7 +61,7 @@ public class StatusServiceImpl implements IStatusService {
      */
     public List<StatusWrapper> getWalletStatusesByWalletId(Long id) {
 
-        List<Status> statuses = iStatusDao.getByWalletId(id);
+        List<Status> statuses = iStatusData.getByWalletId(id);
 
         List<StatusWrapper> statusWrappers = new ArrayList<>();
 
@@ -79,6 +79,6 @@ public class StatusServiceImpl implements IStatusService {
      * @return
      */
     public List<StatusWrapper> getAllStatuses() {
-        return iStatusDao.getAllStatuses();
+        return iStatusData.getAllStatuses();
     }
 }

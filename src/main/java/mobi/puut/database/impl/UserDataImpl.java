@@ -1,7 +1,6 @@
 package mobi.puut.database.impl;
 
-import mobi.puut.database.def.IUserDao;
-import mobi.puut.entities.Status;
+import mobi.puut.database.def.IUserData;
 import mobi.puut.entities.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.List;
  * Created by Chaklader on 6/13/17.
  */
 @Repository("userDao")
-public class UserDaoImpl implements IUserDao {
+public class UserDataImpl implements IUserData {
 
     @Autowired
     private SessionFactory sessionFactory;

@@ -27,8 +27,8 @@ DROP TABLE IF EXISTS `wallet_info`;
 CREATE TABLE `wallet_info` (
   `id`       BIGINT(20)   NOT NULL AUTO_INCREMENT,
   `address`  VARCHAR(255) NOT NULL,
-  #   `name`     VARCHAR(255) NOT NULL,
-  `currency` VARCHAR(255) NOT NULL,
+  `code`     VARCHAR(25)  NOT NULL,
+  `currency` VARCHAR(25)  NOT NULL,
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB

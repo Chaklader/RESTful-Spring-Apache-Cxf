@@ -4,7 +4,7 @@ import mobi.puut.entities.User;
 
 import java.util.List;
 
-public interface IUserDao {
+public interface IUserData {
 
     boolean create(User user);
 

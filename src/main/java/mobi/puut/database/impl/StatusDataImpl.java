@@ -1,6 +1,6 @@
 package mobi.puut.database.impl;
 
-import mobi.puut.database.def.IStatusDao;
+import mobi.puut.database.def.IStatusData;
 import mobi.puut.entities.Status;
 import mobi.puut.services.utils.wrappers.StatusWrapper;
 import org.hibernate.SessionFactory;
@@ -16,7 +16,7 @@ import java.util.Objects;
  * Created by Chaklader on 6/24/17.
  */
 @Repository
-public class StatusDaoImpl implements IStatusDao {
+public class StatusDataImpl implements IStatusData {
 
     @Autowired
     private SessionFactory sessionFactory;

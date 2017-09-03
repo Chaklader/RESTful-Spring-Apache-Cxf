@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import mobi.puut.database.def.IUserDao;
+import mobi.puut.database.def.IUserData;
 import mobi.puut.services.def.IUserService;
 import mobi.puut.services.utils.wrappers.UserWrapper;
 import mobi.puut.services.utils.RestService;
@@ -26,15 +26,15 @@ public class UserServiceImpl implements IUserService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    public IUserDao userDao;
+    public IUserData iUserData;
 
     public void saveOrUpdate(User user) {
-        userDao.saveOrUpdate(user);
+        iUserData.saveOrUpdate(user);
     }
 
     public List<UserWrapper> getAllUsers() {
 
-        List<User> users = userDao.getAllUsers();
+        List<User> users = iUserData.getAllUsers();
 
         if (Objects.isNull(users)) {
             return null;

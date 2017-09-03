@@ -1,7 +1,7 @@
 package mobi.puut.database.impl;
 
-import mobi.puut.database.def.IStatusDao;
-import mobi.puut.database.def.IWalletInfoDao;
+import mobi.puut.database.def.IStatusData;
+import mobi.puut.database.def.IWalletInfoData;
 import mobi.puut.entities.WalletInfo;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -17,13 +17,13 @@ import java.util.Objects;
  * Created by Chaklader on 6/24/17.
  */
 @Repository
-public class WalletInfoDaoImpl implements IWalletInfoDao {
+public class WalletInfoDataImpl implements IWalletInfoData {
 
     // provide a logger for the class
     private final Logger loggger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private IStatusDao iStatusDao;
+    private IStatusData iStatusData;
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -61,11 +61,7 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
     @Transactional(rollbackFor = Exception.class)
     public void deleteWalletInfoByWalletId(Long walletId) {
 
-        // transaction is recored in the status table with the wallet Id
-        // we cant delete the WalletInfo entity as being used foreign key in the Status table
-        if (iStatusDao.getStatusRetentionInfoByWalletId(walletId)) {
-            loggger.info("\n\nUnable to delete the wallet with id {} as being used foregin key " +
-                    "in the Status table\n\n", walletId);
+        if (iStatusData.getStatusRetentionInfoByWalletId(walletId)) {
             return;
         }
 
@@ -76,6 +72,8 @@ public class WalletInfoDaoImpl implements IWalletInfoDao {
 
     @Transactional(rollbackFor = Exception.class)
     public WalletInfo getWalletInfoByCurrencyAndAddress(String currency, String address) {
+
+        // How to make sure the currency String matching is not based on the small and capital letters?
 
         List<WalletInfo> walletInfos = sessionFactory.getCurrentSession()
                 .createQuery("from WalletInfo where currency = :currency and address = :address")

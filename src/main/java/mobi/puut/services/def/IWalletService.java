@@ -38,13 +38,13 @@ public interface IWalletService {
     WalletInfo generateAddress(GenerateWallet generateWallet);
 
 
-    // curl -X DELETE http://localhost:8080/rest/wallet/delete/42
+    // curl -X DELETE http://localhost:8080/rest/wallet/delete/58
     @DELETE
     @Path("delete/{walletId:[\\d]+}")
     void deleteWalletInfoById(@PathParam("walletId") Long id);
 
 
-    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0.25","address":"mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"}' http://localhost:8080/rest/wallet/sendMoney/1
+    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0.25","address":"mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"}' http://localhost:8080/rest/wallet/sendMoney/55
     @POST
     @Path("sendMoney/{walletId:[\\d]+}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ public interface IWalletService {
     String getWalletsCount();
 
 
-    // curl -X GET http://localhost:8080/rest/wallet/balance/1 | json
+    // curl -X GET http://localhost:8080/rest/wallet/addressAndCurrency/bitcoin/{address} | json
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("addressAndCurrency/{currency}/{address}")

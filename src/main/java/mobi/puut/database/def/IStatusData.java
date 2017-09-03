@@ -5,7 +5,7 @@ import mobi.puut.services.utils.wrappers.StatusWrapper;
 
 import java.util.List;
 
-public interface IStatusDao {
+public interface IStatusData {
 
     Status saveStatus(final Status status);
 

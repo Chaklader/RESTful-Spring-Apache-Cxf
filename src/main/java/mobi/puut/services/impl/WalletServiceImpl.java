@@ -2,9 +2,9 @@ package mobi.puut.services.impl;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import mobi.puut.database.def.IStatusDao;
-import mobi.puut.database.def.IUserDao;
-import mobi.puut.database.def.IWalletInfoDao;
+import mobi.puut.database.def.IStatusData;
+import mobi.puut.database.def.IUserData;
+import mobi.puut.database.def.IWalletInfoData;
 import mobi.puut.entities.*;
 import mobi.puut.services.utils.RandomString;
 import mobi.puut.services.utils.WalletManager;
@@ -39,13 +39,13 @@ public class WalletServiceImpl implements IWalletService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private IUserDao iUserDao;
+    private IUserData iUserData;
 
     @Autowired
-    private IStatusDao iStatusDao;
+    private IStatusData iStatusData;
 
     @Autowired
-    private IWalletInfoDao iWalletInfoDao;
+    private IWalletInfoData iWalletInfoData;
 
     private Map<Long, WalletManager> walletMangersMap = new ConcurrentHashMap<>();
 
@@ -57,7 +57,7 @@ public class WalletServiceImpl implements IWalletService {
      * @return the WalletInfo entity
      */
     public WalletInfo getWalletInfo(Long walletId) {
-        WalletInfo walletInfo = iWalletInfoDao.getById(walletId);
+        WalletInfo walletInfo = iWalletInfoData.getById(walletId);
         return walletInfo;
     }
 
@@ -68,14 +68,14 @@ public class WalletServiceImpl implements IWalletService {
      * @return
      */
     public List<Status> getWalletStatuses(final Long id) {
-        return iStatusDao.getByWalletId(id);
+        return iStatusData.getByWalletId(id);
     }
 
     /**
      * @return return all the walletInfo as list
      */
     public List<WalletInfo> getAllWallets() {
-        List<WalletInfo> walletInfos = iWalletInfoDao.getAllWallets();
+        List<WalletInfo> walletInfos = iWalletInfoData.getAllWallets();
         return walletInfos;
     }
 
@@ -174,6 +174,7 @@ public class WalletServiceImpl implements IWalletService {
 
     public WalletModel sendMoney(final Long walletId, final SendMoney sendMoney) {
 
+        // external address to send out the moeny
         String address = sendMoney.getAddress();
 
         String amount = sendMoney.getAmount();
@@ -298,7 +299,7 @@ public class WalletServiceImpl implements IWalletService {
 
         if (walletManager == null) {
 
-            WalletInfo walletInfo = iWalletInfoDao.getById(id);
+            WalletInfo walletInfo = iWalletInfoData.getById(id);
 
             if (walletInfo != null) {
 
@@ -314,7 +315,7 @@ public class WalletServiceImpl implements IWalletService {
      * @return return the user of concern
      */
     protected User getCurrentUser() {
-        User user = iUserDao.getById(1); //TODO
+        User user = iUserData.getById(1); //TODO
         return user;
     }
 
@@ -326,7 +327,7 @@ public class WalletServiceImpl implements IWalletService {
      * @return
      */
     protected WalletInfo createWalletInfo(final String code, final String currency, final String address) {
-        return iWalletInfoDao.create(code, currency, address);
+        return iWalletInfoData.create(code, currency, address);
     }
 
     /**
@@ -348,11 +349,11 @@ public class WalletServiceImpl implements IWalletService {
         status.setWallet_id(walletId);
         status.setTransaction(message.length() > 90 ? message.substring(0, 89) : message);
         status.setBalance(balance.getValue());
-        return iStatusDao.saveStatus(status);
+        return iStatusData.saveStatus(status);
     }
 
     public void deleteWalletInfoById(Long id) {
-        iWalletInfoDao.deleteWalletInfoByWalletId(id);
+        iWalletInfoData.deleteWalletInfoByWalletId(id);
     }
 
     public String getWalletBalanceById(final long id) {
@@ -364,11 +365,11 @@ public class WalletServiceImpl implements IWalletService {
 
     @Override
     public WalletInfo getWalletInfoByCurrencyAndAddress(String currencyName, String address) {
-        return iWalletInfoDao.getWalletInfoByCurrencyAndAddress(currencyName, address);
+        return iWalletInfoData.getWalletInfoByCurrencyAndAddress(currencyName, address);
     }
 
     public String getWalletsCount() {
-        List<WalletInfo> walletInfos = iWalletInfoDao.getAllWallets();
+        List<WalletInfo> walletInfos = iWalletInfoData.getAllWallets();
         return String.valueOf(walletInfos.size());
     }
 }

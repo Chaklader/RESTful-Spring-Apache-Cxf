@@ -5,12 +5,10 @@ import mobi.puut.entities.WalletInfo;
 import java.util.List;
 
 
-public interface IWalletInfoDao {
+public interface IWalletInfoData {
 
     List<WalletInfo> getAllWallets();
 
-    //    WalletInfo getByName(String walletName);
-//
     WalletInfo getById(final Long id);
 
     WalletInfo create(String code, String currency, String address);
