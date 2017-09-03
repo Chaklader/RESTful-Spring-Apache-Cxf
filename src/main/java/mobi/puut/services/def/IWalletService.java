@@ -44,7 +44,7 @@ public interface IWalletService {
     void deleteWalletInfoById(@PathParam("walletId") Long id);
 
 
-    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0.25","address":"mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"}' http://localhost:8080/rest/wallet/sendMoney/55
+    // curl -H "Content-Type: application/json" -X POST -d '{"amount":"0","address":"mv4rnyY3Su5gjcDNzbMLKBQkBicCtHUtFB"}' http://localhost:8080/rest/wallet/sendMoney/60
     @POST
     @Path("sendMoney/{walletId:[\\d]+}")
     @Consumes(MediaType.APPLICATION_JSON)
