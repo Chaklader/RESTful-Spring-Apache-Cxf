@@ -76,4 +76,36 @@ public class WalletInfo {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WalletInfo)) return false;
+
+        WalletInfo that = (WalletInfo) o;
+
+        if (!getId().equals(that.getId())) return false;
+        if (!getCode().equals(that.getCode())) return false;
+        if (!getAddress().equals(that.getAddress())) return false;
+        return getCurrency().equals(that.getCurrency());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        result = 31 * result + getCode().hashCode();
+        result = 31 * result + getAddress().hashCode();
+        result = 31 * result + getCurrency().hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "WalletInfo{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", address='" + address + '\'' +
+                ", currency='" + currency + '\'' +
+                '}';
+    }
 }
