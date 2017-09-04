@@ -1,10 +1,9 @@
 package mobi.puut.entities;
 
-import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Chaklader on 6/24/17.
@@ -14,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class WalletInfo {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,6 +28,9 @@ public class WalletInfo {
     @NotNull
     @Column(name = "currency")
     private String currency;
+
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "wallet_id")
+//    Set<Status> statuses = new HashSet<Status>(0);
 
     public Long getId() {
         return id;
@@ -77,6 +79,14 @@ public class WalletInfo {
         this.currency = currency;
     }
 
+//    public Set<Status> getStatuses() {
+//        return statuses;
+//    }
+
+//    public void setStatuses(Set<Status> statuses) {
+//        this.statuses = statuses;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,6 +111,7 @@ public class WalletInfo {
 
     @Override
     public String toString() {
+
         return "WalletInfo{" +
                 "id=" + id +
                 ", code='" + code + '\'' +

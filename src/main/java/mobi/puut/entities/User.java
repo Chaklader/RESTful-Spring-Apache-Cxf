@@ -3,6 +3,8 @@ package mobi.puut.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -13,7 +15,7 @@ import javax.validation.constraints.Size;
 public class User {
 
     @Id
-    @Column
+    @Column(name = "id", unique = true, nullable = false)
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,6 +24,9 @@ public class User {
     @Column(name = "name")
     @Size(min = 5, max = 45, message = "Name must be between 5 and 45 characters.")
     private String name;
+
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
+//    Set<Status> statuses = new HashSet<>(0);
 
     public User() {
 
@@ -52,6 +57,14 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+//    public Set<Status> getStatuses() {
+//        return statuses;
+//    }
+//
+//    public void setStatuses(Set<Status> statuses) {
+//        this.statuses = statuses;
+//    }
 
     @Override
     public boolean equals(Object o) {

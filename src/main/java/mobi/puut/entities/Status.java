@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class Status {
 
     @Id
-    @Column
+    @Column(name = "id", unique = true, nullable = false)
     @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
