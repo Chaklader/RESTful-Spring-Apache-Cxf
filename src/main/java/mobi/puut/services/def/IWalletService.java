@@ -15,7 +15,6 @@ import java.util.List;
 @Path("rest/wallet")
 public interface IWalletService {
 
-
     // curl -X GET http://localhost:8080/rest/wallet/wallets | json
     @GET
     @Path("wallets")
@@ -30,6 +29,7 @@ public interface IWalletService {
     WalletInfo getWalletInfo(@PathParam("walletId") Long walletId);
 
 
+    // curl -i -X POST -d username=user -d password=userPass http://localhost:8080/spring-security-rest/login
     // curl -H "Content-Type: application/json" -X POST -d '{"currencyName":"Bitcoin"}' http://localhost:8080/rest/wallet/generateAddress
     @POST
     @Path("generateAddress")
