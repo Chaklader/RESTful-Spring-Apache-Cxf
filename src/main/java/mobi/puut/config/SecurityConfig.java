@@ -32,6 +32,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user").password("userPass").roles("USER");
     }
 
+
+    /* antMatcher() is a method of HttpSecurity, it doesn't have anything to do with authorizeRequests().
+    Basically, http.antMatcher() tells Spring to only configure HttpSecurity if the path matches this
+    pattern.
+
+    The authorizeRequests().antMatchers() is then used to apply authorization to one or more paths you specify
+    in antMatchers(). Such as permitAll() or hasRole('USER3'). These only get applied if the first http.antMatcher()
+    is matched.*/
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -40,8 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/api/foos").authenticated()
-                .antMatchers("/foos").authenticated()
+                // add more matchers if necessary
+                .antMatchers("rest/wallet/**").authenticated()
+                .antMatchers("rest/user/**").authenticated()
+                .antMatchers("rest/service/**").authenticated()
                 .and()
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)
