@@ -77,6 +77,4 @@ public interface IWalletService {
     // TODO
     // write a RESTful method for the receiving operations
 
-    // TODO: 9/1/17
-    // remove the annotation @RestService
 }
