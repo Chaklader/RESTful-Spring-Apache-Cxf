@@ -29,6 +29,8 @@ public class AppConfig {
 
     private static final String PROVIDER_PACKAGE = "mobi.puut.services.utils.provider";
 
+
+    // public static final String API_BASE = "/api/*";
     public static final String API_BASE = "/*";
 
     @ApplicationPath("/")
@@ -61,7 +63,7 @@ public class AppConfig {
     }
 
     private List<Object> restServiceList(ApplicationContext appContext) {
-         return RestServiceBeanScanner.scan(appContext, AppConfig.RESOURCES_PACKAGE);
+        return RestServiceBeanScanner.scan(appContext, AppConfig.RESOURCES_PACKAGE);
     }
 
     private List<Object> restProviderList(final ApplicationContext appContext,

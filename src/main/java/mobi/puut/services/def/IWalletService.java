@@ -22,7 +22,7 @@ public interface IWalletService {
     List<WalletInfo> getAllWallets();
 
 
-    //  curl -X GET http://localhost:8080/rest/wallet/1 | json
+    // curl -X GET http://localhost:8080/rest/wallet/1 | json
     @GET
     @Path("{walletId:[\\d]+}")
     @Produces(MediaType.APPLICATION_JSON)
