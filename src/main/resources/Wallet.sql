@@ -10,7 +10,7 @@ USE Wallet;
 DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
-  `id`   INT(11) NOT NULL AUTO_INCREMENT,
+  `id`   BIGINT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45)      DEFAULT NULL,
   PRIMARY KEY (`id`)
 )
@@ -46,7 +46,7 @@ CREATE TABLE `status` (
   `address`     VARCHAR(90)      DEFAULT NULL,
   `balance`     FLOAT            DEFAULT NULL,
   `transaction` VARCHAR(90)      DEFAULT NULL,
-  `user_id`     INT(11) NOT NULL,
+  `user_id`     BIGINT(11) NOT NULL,
   `wallet_id`   BIGINT(20)       DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `wallet_id_idx` (`wallet_id`),

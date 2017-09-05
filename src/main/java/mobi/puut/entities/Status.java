@@ -20,6 +20,7 @@ public class Status {
 
     @NotNull
     @Column(name = "user_id")
+    @JoinColumn(table = "user", name = "id", nullable = false)
     private int user_id;
 
     @NotNull
@@ -37,6 +38,7 @@ public class Status {
     private String transaction;
 
     @NotNull
+    @JoinColumn(name = "id", table = "wallet_id", nullable = false)
     @Column(name = "wallet_id")
     private long wallet_id;
 

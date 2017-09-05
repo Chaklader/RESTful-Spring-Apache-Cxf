@@ -25,8 +25,8 @@ public class User {
     @Size(min = 5, max = 45, message = "Name must be between 5 and 45 characters.")
     private String name;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "id")
-//    Set<Status> statuses = new HashSet<>(0);
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user_id")
+//    Set<Status> statuses = new HashSet<Status>(0);
 
     public User() {
 
@@ -57,14 +57,6 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
-
-//    public Set<Status> getStatuses() {
-//        return statuses;
-//    }
-//
-//    public void setStatuses(Set<Status> statuses) {
-//        this.statuses = statuses;
-//    }
 
     @Override
     public boolean equals(Object o) {

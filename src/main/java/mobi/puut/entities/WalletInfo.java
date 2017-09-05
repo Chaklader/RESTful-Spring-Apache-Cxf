@@ -79,14 +79,6 @@ public class WalletInfo {
         this.currency = currency;
     }
 
-//    public Set<Status> getStatuses() {
-//        return statuses;
-//    }
-
-//    public void setStatuses(Set<Status> statuses) {
-//        this.statuses = statuses;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
