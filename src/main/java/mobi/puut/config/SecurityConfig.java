@@ -12,6 +12,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 @Configuration
 @EnableWebSecurity
+// need to change this to the security directory
 @ComponentScan("")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -39,7 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/foos").authenticated()
+//                .antMatchers("/api/foos").authenticated()
+                .antMatchers("/foos").authenticated()
                 .and()
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)
