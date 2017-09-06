@@ -2,7 +2,9 @@ package mobi.puut.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,9 +31,8 @@ public class WalletInfo {
     @Column(name = "currency")
     private String currency;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pk.wallet_id")
-//    Set<Status> statuses = new HashSet<Status>(0);
-
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "wallet_id")
+    Set<Status> statuses = new HashSet<>(0);
 
     public Long getId() {
         return id;
@@ -71,13 +72,20 @@ public class WalletInfo {
         this.address = address;
     }
 
-
     public String getCurrency() {
         return currency;
     }
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Set<Status> getStatuses() {
+        return statuses;
+    }
+
+    public void setStatuses(Set<Status> statuses) {
+        this.statuses = statuses;
     }
 
     @Override

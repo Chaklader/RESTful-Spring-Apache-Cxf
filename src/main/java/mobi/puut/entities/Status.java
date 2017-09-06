@@ -19,11 +19,6 @@ public class Status {
     private int id;
 
     @NotNull
-    @Column(name = "user_id")
-    @JoinColumn(table = "user", name = "id", nullable = false)
-    private int user_id;
-
-    @NotNull
     @Column(name = "balance")
     private float balance;
 
@@ -36,6 +31,11 @@ public class Status {
     @Column(name = "transaction")
     @Size(min = 5, max = 90, message = "Transaction history must be between 5 and 90 characters.")
     private String transaction;
+
+    @NotNull
+    @Column(name = "user_id")
+    @JoinColumn(table = "user", name = "id", nullable = false)
+    private int user_id;
 
     @NotNull
     @JoinColumn(name = "id", table = "wallet_id", nullable = false)
