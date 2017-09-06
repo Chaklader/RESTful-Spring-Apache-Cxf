@@ -110,6 +110,15 @@ public class WalletInfo {
         return result;
     }
 
+    public String getAllParametersExcludingStatuses() {
+        return "WalletInfo{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", address='" + address + '\'' +
+                ", currency='" + currency + '\'' +
+                '}';
+    }
+
     @Override
     public String toString() {
         return "WalletInfo{" +
@@ -118,15 +127,6 @@ public class WalletInfo {
                 ", address='" + address + '\'' +
                 ", currency='" + currency + '\'' +
                 ", statuses=" + statuses +
-                '}';
-    }
-
-    public String getAllParametersExcludingStatuses() {
-        return "WalletInfo{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", address='" + address + '\'' +
-                ", currency='" + currency + '\'' +
                 '}';
     }
 }
