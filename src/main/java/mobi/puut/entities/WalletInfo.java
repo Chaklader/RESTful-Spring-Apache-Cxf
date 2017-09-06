@@ -29,8 +29,9 @@ public class WalletInfo {
     @Column(name = "currency")
     private String currency;
 
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "wallet_id")
+//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pk.wallet_id")
 //    Set<Status> statuses = new HashSet<Status>(0);
+
 
     public Long getId() {
         return id;

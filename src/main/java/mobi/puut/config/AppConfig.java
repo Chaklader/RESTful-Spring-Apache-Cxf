@@ -29,7 +29,6 @@ public class AppConfig {
 
     private static final String PROVIDER_PACKAGE = "mobi.puut.services.utils.provider";
 
-
     // public static final String API_BASE = "/api/*";
     public static final String API_BASE = "/*";
 

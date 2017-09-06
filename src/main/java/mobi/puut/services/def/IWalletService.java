@@ -72,9 +72,10 @@ public interface IWalletService {
     @Path("addressAndCurrency/{currency}/{address}")
     WalletInfo getWalletInfoByCurrencyAndAddress(@PathParam("currency") String currencyName, @PathParam("address") String address);
 
+
     WalletModel getWalletModel(final Long walletId);
+
 
     // TODO
     // write a RESTful method for the receiving operations
-
 }

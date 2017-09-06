@@ -45,7 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     The authorizeRequests().antMatchers() is then used to apply authorization to one or more paths you specify
     in antMatchers(). Such as permitAll() or hasRole('USER3'). These only get applied if the first http.antMatcher()
     is matched.*/
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
