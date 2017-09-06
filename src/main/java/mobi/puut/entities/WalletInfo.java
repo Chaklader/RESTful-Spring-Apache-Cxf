@@ -112,7 +112,16 @@ public class WalletInfo {
 
     @Override
     public String toString() {
+        return "WalletInfo{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", address='" + address + '\'' +
+                ", currency='" + currency + '\'' +
+                ", statuses=" + statuses +
+                '}';
+    }
 
+    public String getAllParametersExcludingStatuses() {
         return "WalletInfo{" +
                 "id=" + id +
                 ", code='" + code + '\'' +
