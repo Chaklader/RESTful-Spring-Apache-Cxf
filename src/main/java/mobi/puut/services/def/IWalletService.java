@@ -76,6 +76,15 @@ public interface IWalletService {
     WalletModel getWalletModel(final Long walletId);
 
 
+    // curl -H "Content-Type: application/json" -X POST http://localhost:8080/rest/wallet/receiving/store/1 | json
+    @POST
+    @Path("receiving/store/{walletId:[\\d]+}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON})
+    Status storeReceivedMoney(@PathParam("walletId") final Long WalletId);
+
+
+
     // TODO
     // write a RESTful method for the receiving operations
 }

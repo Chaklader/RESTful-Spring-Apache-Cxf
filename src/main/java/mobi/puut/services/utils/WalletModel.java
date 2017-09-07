@@ -22,7 +22,7 @@ public class WalletModel {
 
     private Address address;
 
-    private String transaction;
+    private Transaction transaction;
 
     private Coin balance = Coin.ZERO;
 
@@ -45,11 +45,11 @@ public class WalletModel {
         this.UserId = userId;
     }
 
-    public String getTransaction() {
+    public Transaction getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(String transaction) {
+    public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
     }
 
@@ -111,9 +111,8 @@ public class WalletModel {
 
         // find to most recent transaction
         this.transaction = Objects.isNull(transactions) ||
-                transactions.isEmpty() ? "No transaction" : String.valueOf(transactions.get(0));
+                transactions.isEmpty() ? null : transactions.get(0);
     }
-
 
     /**
      * @param wallet set up an updated wallet balance, address and transactions
@@ -122,7 +121,6 @@ public class WalletModel {
     public boolean setWallet(Wallet wallet) {
 
         try {
-
             wallet.addChangeEventListener(new WalletChangeEventListener() {
                 @Override
                 public void onWalletChanged(Wallet wallet) {
@@ -153,6 +151,22 @@ public class WalletModel {
             super.doneDownload();
             syncProgress = SYNCHRONISATION_FINISHED;
         }
+    }
+
+    public boolean isLastTransactionReceiving() {
+
+        if (this.transaction == null) {
+            return false;
+        }
+
+        // we have a valid transaction, get teh value out of it
+        Coin coin = this.transaction.getValue(WalletManager.bitcoin.wallet());
+
+        if (coin.isPositive()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

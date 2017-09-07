@@ -202,6 +202,41 @@ public class WalletServiceImpl implements IWalletService {
         return model;
     }
 
+
+    // store the info for the receiving transactions
+    public Status storeReceivedMoney(final Long walletId) {
+
+        User user = getCurrentUser();
+
+        WalletModel model = null;
+
+        WalletManager walletManager = getWalletManager(walletId);
+
+        if (walletManager != null) {
+
+            Wallet wallet = walletManager.getBitcoin().wallet();
+
+            if (Objects.isNull(wallet)) {
+                return null;
+            }
+
+            model = walletManager.getModel();
+
+            if (model.isLastTransactionReceiving()) {
+
+                Address address = model.getAddress();
+                Coin balance = model.getBalance();
+
+                Status status = saveTransaction(user, walletId, address.toString(),
+                        model.addTransactionHistory(model.getTransaction()), balance);
+
+                return status;
+            }
+        }
+        return null;
+    }
+
+
     /**
      * take the amount as Stirng and parse it as Satoshi coin
      *
@@ -349,6 +384,7 @@ public class WalletServiceImpl implements IWalletService {
         status.setWallet_id(walletId);
         status.setTransaction(message.length() > 90 ? message.substring(0, 89) : message);
         status.setBalance(balance.getValue());
+
         return iStatusData.saveStatus(status);
     }
 
