@@ -81,6 +81,24 @@ public class DatabaseConfig {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
     }
+
+
+//    It will increase the length of the JPA session or as the documentation says, it
+//    is used "to allow for lazy loading in web views despite the original transactions
+//    already being completed. So this way the JPA session will be open a bit longer
+//    and because of that you can lazily load collections in your jsp files and controller
+//    classes.
+
+
+//    <filter>
+//    <filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
+//    <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
+//</filter>
+//<filter-mapping>
+//    <filter-name>SpringOpenEntityManagerInViewFilter</filter-name>
+//    <url-pattern>/*</url-pattern>
+//</filter-mapping>
+
 }
 
 
