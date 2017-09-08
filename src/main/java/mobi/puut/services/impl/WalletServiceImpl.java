@@ -222,16 +222,30 @@ public class WalletServiceImpl implements IWalletService {
 
             model = walletManager.getModel();
 
-            if (model.isLastTransactionReceiving()) {
+//            if (model.isLastTransactionReceiving()) {
+//
+//                Address address = model.getAddress();
+//                Coin balance = model.getBalance();
+//
+//                Status status = saveTransaction(user, walletId, address.toString(),
+//                        model.addTransactionHistory(model.getTransaction()), balance);
+//
+//                return status;
+//            }
 
-                Address address = model.getAddress();
-                Coin balance = model.getBalance();
+            // we already know the last transaction is receiving
 
-                Status status = saveTransaction(user, walletId, address.toString(),
-                        model.addTransactionHistory(model.getTransaction()), balance);
+            // address is the respective address of our wallet
+            Address address = model.getAddress();
 
-                return status;
-            }
+            // our wallet balance
+            Coin balance = model.getBalance();
+
+            // save the receiving transaction and return it
+            Status status = saveTransaction(user, walletId, address.toString(),
+                    model.addTransactionHistory(model.getTransaction()), balance);
+
+            return status;
         }
         return null;
     }
@@ -402,6 +416,35 @@ public class WalletServiceImpl implements IWalletService {
     @Override
     public WalletInfo getWalletInfoByCurrencyAndAddress(String currencyName, String address) {
         return iWalletInfoData.getWalletInfoByCurrencyAndAddress(currencyName, address);
+    }
+
+
+    public boolean isReceivingTransaction(final Long walletId) {
+
+        WalletModel model = null;
+        WalletManager walletManager = getWalletManager(walletId);
+
+        if (Objects.isNull(walletManager)) {
+            model = walletManager.getModel();
+        }
+
+        // the model is not synchronized till now,
+        if (Objects.isNull(model) || !model.isSyncFinished()) {
+            return false;
+        }
+
+        Wallet wallet = walletManager.getBitcoin().wallet();
+
+        if (Objects.isNull(wallet)) {
+            return false;
+        }
+
+        // get the wallet, now check if the last transaction is receiving
+        if (model.isLastTransactionReceiving()) {
+            return true;
+        }
+
+        return false;
     }
 
     public String getWalletsCount() {
