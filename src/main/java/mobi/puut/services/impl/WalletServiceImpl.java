@@ -233,12 +233,10 @@ public class WalletServiceImpl implements IWalletService {
 //                return status;
 //            }
 
-            // we already know the last transaction is receiving
 
-            // address is the respective address of our wallet
+            // we post from the client after knowing that the last transaction is receiving
             Address address = model.getAddress();
 
-            // our wallet balance
             Coin balance = model.getBalance();
 
             // save the receiving transaction and return it
@@ -247,6 +245,7 @@ public class WalletServiceImpl implements IWalletService {
 
             return status;
         }
+
         return null;
     }
 
@@ -260,6 +259,7 @@ public class WalletServiceImpl implements IWalletService {
     protected Coin parseCoin(final String amountStr) {
 
         try {
+
             Coin amount = Coin.parseCoin(amountStr);
             if (amount.getValue() <= 0) {
                 throw new IllegalArgumentException("Invalid amount: " + amountStr);
@@ -402,6 +402,19 @@ public class WalletServiceImpl implements IWalletService {
         return iStatusData.saveStatus(status);
     }
 
+    /*
+    * check if the model is synchronized to the blockchain
+    * */
+    public boolean isModelSynchronized(Long walletId) {
+
+        WalletModel walletModel = getWalletModel(walletId);
+
+        if (walletModel == null) {
+            return false;
+        }
+        return walletModel.isSyncFinished();
+    }
+
     public void deleteWalletInfoById(Long id) {
         iWalletInfoData.deleteWalletInfoByWalletId(id);
     }
@@ -413,12 +426,14 @@ public class WalletServiceImpl implements IWalletService {
         return balance;
     }
 
-    @Override
     public WalletInfo getWalletInfoByCurrencyAndAddress(String currencyName, String address) {
         return iWalletInfoData.getWalletInfoByCurrencyAndAddress(currencyName, address);
     }
 
 
+    /*
+    * check if the last wallet transaction is receiving
+    * */
     public boolean isReceivingTransaction(final Long walletId) {
 
         WalletModel model = null;
@@ -450,5 +465,19 @@ public class WalletServiceImpl implements IWalletService {
     public String getWalletsCount() {
         List<WalletInfo> walletInfos = iWalletInfoData.getAllWallets();
         return String.valueOf(walletInfos.size());
+    }
+
+    public String getWalletTransactionsCount(final Long id) {
+
+        WalletModel walletModel = getWalletModel(id);
+
+        if (walletModel != null) {
+
+            // this transaction list come from the blockchain
+            List<Transaction> history = walletModel.getTransactions();
+            return String.valueOf(history.size());
+        }
+
+        return "0";
     }
 }

@@ -7,6 +7,7 @@ import mobi.puut.entities.WalletInfo;
 import mobi.puut.services.utils.WalletModel;
 import mobi.puut.services.utils.wrappers.WalletInfoWrapper;
 
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -91,6 +92,16 @@ public interface IWalletService {
     boolean isReceivingTransaction(@PathParam("walletId") final Long walletId);
 
 
-    // TODO
-    // write a RESTful method for the receiving operations
+    // curl -X GET http://localhost:8080/rest/wallet/synchronized/1 | json
+    @GET
+    @Path("synchronized/{walletId:[\\d]+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    boolean isModelSynchronized(@PathParam("walletId") final Long walletId);
+
+
+    // curl -X GET http://localhost:8080/rest/wallet/transactions/count/1 | json
+    @GET
+    @Path("transactions/count/{walletId:[\\d]+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    String getWalletTransactionsCount(@PathParam("walletId") final Long walletId);
 }

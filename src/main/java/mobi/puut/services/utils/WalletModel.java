@@ -107,7 +107,8 @@ public class WalletModel {
 
         this.address = wallet.currentReceiveAddress();
 
-        transactions.addAll(wallet.getRecentTransactions(100, false));
+//        transactions.addAll(wallet.getRecentTransactions(100, false));
+        transactions.addAll(wallet.getTransactions(false));
 
         // find to most recent transaction
         this.transaction = Objects.isNull(transactions) ||
